@@ -7,22 +7,96 @@ const topicsData = {
                 {
                     "title": "Unit 1",
                     "lessons": [
-                        "Reading and Vocabulary",
-                        "Past&Present Tenses&Question Tags"
+                        {
+                            "title": "Reading and Vocabulary",
+                            "questions": [
+                                {
+                                    "question": "What literary device is used in the phrase 'the curtain of night fell'?",
+                                    "options": ["Simile", "Metaphor", "Alliteration", "Hyperbole"],
+                                    "answer": "Metaphor"
+                                },
+                                {
+                                    "question": "The word 'ambiguous' most closely means:",
+                                    "options": ["Clear", "Uncertain", "Definite", "Determined"],
+                                    "answer": "Uncertain"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Past&Present Tenses&Question Tags",
+                            "questions": [
+                                {
+                                    "question": "Choose the correct present tense: 'She _____ to school every day.'",
+                                    "options": ["go", "goes", "going", "went"],
+                                    "answer": "goes"
+                                },
+                                {
+                                    "question": "Which is the correct question tag? 'You're coming to the party, _____?'",
+                                    "options": ["aren't you", "don't you", "isn't you", "won't you"],
+                                    "answer": "aren't you"
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
                     "title": "Unit 2",
                     "lessons": [
-                        "Reading and Vocabulary",
-                        "Future Forms"
+                        {
+                            "title": "Reading and Vocabulary",
+                            "questions": [
+                                {
+                                    "question": "What is the main idea of the passage?",
+                                    "options": ["Environmental protection", "Economic development", "Cultural heritage", "Political systems"],
+                                    "answer": "Environmental protection"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Future Forms",
+                            "questions": [
+                                {
+                                    "question": "Which sentence uses the future perfect tense?",
+                                    "options": [
+                                        "I will study tomorrow.", 
+                                        "I will be studying tomorrow.", 
+                                        "I will have studied by tomorrow.",
+                                        "I am going to study tomorrow."
+                                    ],
+                                    "answer": "I will have studied by tomorrow."
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
                     "title": "Unit 3",
                     "lessons": [
-                        "Reading and Vocabulary",
-                        "Habits&Clauses"
+                        {
+                            "title": "Reading and Vocabulary",
+                            "questions": [
+                                {
+                                    "question": "What type of text is this passage?",
+                                    "options": ["Narrative", "Descriptive", "Persuasive", "Expository"],
+                                    "answer": "Expository"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Habits&Clauses",
+                            "questions": [
+                                {
+                                    "question": "Which of the following is an adverb clause?",
+                                    "options": [
+                                        "The book that I read", 
+                                        "When the sun rises", 
+                                        "The tall building",
+                                        "To swim quickly"
+                                    ],
+                                    "answer": "When the sun rises"
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
@@ -370,7 +444,7 @@ function generateSemesterContent(subject, semester) {
 
         unit.lessons.forEach(lesson => {
             html += `
-                <div class="section-content">${lesson}</div>
+                <div class="section-content" data-subject="${subject}" data-unit="${unit.title}" data-lesson="${lesson.title}">${lesson.title}</div>
             `;
         });
 
@@ -407,3 +481,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the default content (English, First Semester)
     updateContent();
 });
+
+// Function to get questions for a specific lesson
+function getQuestions(subject, unitTitle, lessonTitle) {
+    // Find the active semester
+    const activeSemester = document.querySelector('.semester-btn.active').dataset.semester;
+    
+    // Navigate through the data structure to find matching questions
+    try {
+        const semesterData = topicsData[subject][activeSemester];
+        const unit = semesterData.units.find(u => u.title === unitTitle);
+        if (!unit) return null;
+        
+        const lesson = unit.lessons.find(l => l.title === lessonTitle);
+        if (!lesson) return null;
+        
+        return lesson.questions || [];
+    } catch (error) {
+        console.error("Error finding questions:", error);
+        return [];
+    }
+}
