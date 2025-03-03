@@ -30,29 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add click handlers to all section-content elements (after content is generated)
-    setTimeout(() => {
-        document.querySelectorAll('.section-content').forEach(section => {
-            section.addEventListener('click', function() {
-                const unitElement = this.closest('.section').querySelector('.section-title');
-                const subjectElement = document.querySelector('.nav-btn[data-subject].active');
-                
-                const subject = subjectElement.dataset.subject;
-                const unit = unitElement.textContent;
-                const lesson = this.textContent;
-
-                handleSectionClick(subject, unit, lesson);
-            });
-        });
-    }, 100);
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('questionModal');
-        if (event.target == modal) {
-            closeModal();
-        }
-    };
+    // Set up content and attach event listeners
+    updateContent();
 });
 
 function updateContent() {
@@ -71,38 +50,32 @@ function updateContent() {
     if (contentElement) {
         contentElement.classList.add('active');
     }
+    
+    // Add click handlers to all section-content elements
+    document.querySelectorAll('.section-content').forEach(section => {
+        section.addEventListener('click', function() {
+            const subject = this.dataset.subject;
+            const unit = this.dataset.unit;
+            const lesson = this.dataset.lesson;
+            
+            handleSectionClick(subject, unit, lesson);
+        });
+    });
 }
 
-async function handleSectionClick(subject, unit, lesson) {
+function handleSectionClick(subject, unit, lesson) {
     try {
-        // In a real application, this would fetch from the server
-        // For the demo, we'll simulate a response or error
-        const simulateSuccess = Math.random() > 0.5; // 50% chance of success for demo purposes
+        // Get the questions for this lesson from the data structure
+        const questions = getQuestions(subject, unit, lesson);
         
-        if (simulateSuccess) {
-            // Simulate successful response with mock questions
-            const mockQuestions = [
-                {
-                    question: "Sample question 1 for " + lesson + "?",
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    answer: "Option B"
-                },
-                {
-                    question: "Sample question 2 for " + lesson + "?",
-                    options: ["Option A", "Option B", "Option C", "Option D"],
-                    answer: "Option D"
-                },
-                {
-                    question: "Sample essay question for " + lesson + "?",
-                    answer: "This is a sample answer that would be provided for an essay-type question."
-                }
-            ];
-            displayQuestions(subject, unit, lesson, mockQuestions);
+        if (questions && questions.length > 0) {
+            displayQuestions(subject, unit, lesson, questions);
         } else {
-            // Simulate error
-            throw new Error('Questions not found');
+            // No questions found for this lesson
+            showError(subject, unit, lesson);
         }
     } catch (error) {
+        console.error("Error handling section click:", error);
         showError(subject, unit, lesson);
     }
 }
@@ -125,7 +98,7 @@ function displayQuestions(subject, unit, lesson, questions) {
                     ${question.options.map(option => `<li>${option}</li>`).join('')}
                 </ul>
             ` : ''}
-            ${question.answer ? `<p><strong>Answer:</strong> ${question.answer}</p>` : ''}
+            <p><strong>Answer:</strong> ${question.answer}</p>
         `;
         questionContent.appendChild(questionDiv);
     });
@@ -138,14 +111,27 @@ function showError(subject, unit, lesson) {
     const modalTitle = document.getElementById('modalTitle');
     const questionContent = document.getElementById('questionContent');
 
-    modalTitle.textContent = 'Error';
+    modalTitle.textContent = 'No Questions Found';
     questionContent.innerHTML = `
         <div class="error-message">
-            Questions not found for ${subject} - ${unit} - ${lesson}
+            No questions available yet for ${subject} - ${unit} - ${lesson}
+        </div>
+        <div class="add-question-prompt">
+            <p>Would you like to add questions for this topic?</p>
+            <button class="btn add-question-btn">Add Questions</button>
         </div>
     `;
 
     modal.style.display = 'block';
+    
+    // Optionally add event listener for the Add Questions button
+    const addBtn = questionContent.querySelector('.add-question-btn');
+    if (addBtn) {
+        addBtn.addEventListener('click', function() {
+            // This could open a form to add new questions
+            alert('Question creation feature coming soon!');
+        });
+    }
 }
 
 function closeModal() {
