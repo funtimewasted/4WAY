@@ -1,0 +1,182 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0 0 20px 0;
+}
+
+.nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.subjects {
+    display: flex;
+    gap: 10px;
+}
+
+.secondary-nav {
+    display: flex;
+    gap: 10px;
+    padding-left: 10px;
+}
+
+.nav-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.nav-btn.active {
+    background-color: #0f172a;
+    color: white;
+}
+
+.semester-toggle {
+    display: flex;
+    gap: 5px;
+    background-color: #f1f5f9;
+    padding: 4px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+}
+
+.semester-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background: none;
+    transition: all 0.2s ease;
+}
+
+.semester-btn.active {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.unit-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.unit-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #4a5568;
+}
+
+.section-content {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.section-content:hover {
+    background-color: #f8f9fa;
+}
+
+.semester-content {
+    display: none;
+}
+
+.semester-content.active {
+    display: block;
+}
+
+.question-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 50px auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 12px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.question-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.error-message {
+    color: #dc2626;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #dc2626;
+    border-radius: 4px;
+    background-color: #fef2f2;
+}

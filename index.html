@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Question Bank</h1>
+        </div>
+
+        <div class="nav-section">
+            <div class="subjects">
+                <button class="nav-btn" data-subject="اللغة العربية">
+                    <span>📚</span> اللغة العربية
+                </button>
+                <button class="nav-btn active" data-subject="english">
+                    <span>🌎</span> English
+                </button>
+                <button class="nav-btn" data-subject="التاريخ">
+                    <span>📜</span> التاريخ
+                </button>
+                <button class="nav-btn" data-subject="دين">
+                    <span>📖</span> دين
+                </button>
+            </div>
+
+            <div class="secondary-nav">
+                <div class="semester-toggle">
+                    <button class="semester-btn active" data-semester="first">First Semester</button>
+                    <button class="semester-btn" data-semester="second">Second Semester</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <!-- Content will be loaded dynamically from topics.js -->
+        </div>
+
+        <div class="question-modal" id="questionModal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <div id="questionContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="topics.js"></script>
+    <script src="questions.js"></script>
+</body>
+</html>
